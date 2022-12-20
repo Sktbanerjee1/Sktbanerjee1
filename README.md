@@ -1,5 +1,5 @@
 # 💫 About Me:
-I am a service-oriented and passionate developer from India, currently working as a Senior Data Analyst at the University of Medicine, University of Virginia.I am interested in the design of living systems, working on uncovering the deepest secrets of biological mechanisms in the context of disease and health. Specifically, I am designing descriptive and predictive statistical approaches (algorithms) to understand biological regulations.
+I am a service-oriented and passionate developer from India, currently working as a Senior Data Analyst at the School of Medicine, University of Virginia.I am interested in the design of living systems, working on uncovering the deepest secrets of biological mechanisms in the context of disease and health. Specifically, I am designing descriptive and predictive statistical approaches (algorithms) to understand biological regulations.
 
 
 ## 🌐 Socials:
