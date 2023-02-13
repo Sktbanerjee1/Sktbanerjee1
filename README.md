@@ -1,7 +1,5 @@
 # 💫 About Me:
-I am a from India, currently working as a Senior Data Analyst at the School of Medicine, UVA.I am interested in the design of living systems and I am working on uncovering the secrets of biological mechanisms in the context of human disease and health. 
-
-Specifically, I am designing descriptive and predictive statistical approaches (algorithms) to understand biological regulations.
+I am working as a Senior Data Analyst at the School of Medicine, UVA.I am interested in the design of living systems and I am working on uncovering the secrets of biological mechanisms in the context of human disease and health. Specifically, I am designing descriptive and predictive statistical approaches (algorithms) to understand biological regulations.
 
 
 ## 🌐 Socials:
