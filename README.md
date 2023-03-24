@@ -33,10 +33,6 @@ Senior Data Analyst at the Center for zpublic Health Genomics (CPHG), School of 
 #### Others
 ![LINUX](https://img.shields.io/badge/Linux-FCC624?style=plastic&logo=linux&logoColor=black) ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=plastic&logo=kubernetes&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=plastic&logo=postman&logoColor=white)
 
-
-## 🌐 Socials:
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/sbandyopadhyay95) 
-
 ---
 ## 📊 GitHub Stats:
 ![](https://github-readme-stats.vercel.app/api?username=Sktbanerjee1&theme=dark&hide_border=true&include_all_commits=false&count_private=false)<br/>
