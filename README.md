@@ -1,5 +1,5 @@
 # 💫 About Me:
-Senior Data Analyst at the Center for zpublic Health Genomics (CPHG), School of Medicine, UVA.
+Senior Data Analyst at the Center for Public Health Genomics (CPHG), School of Medicine, UVA.
 
 ## Things I am interested in
 
