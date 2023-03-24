@@ -4,9 +4,11 @@ Senior Data Analyst at the Center for zpublic Health Genomics (CPHG), School of 
 ## Things I am interested in
 
 * Algorithm design
-* Workflow (pipeline optimization)
+* Workflow (pipeline) optimization
 * Machine Learning
-* Graph Theory and Network Analysis 
+* Graph Theory
+* Network Analysis
+* Systems Biology
 
 
 ## 🌐 Socials:
