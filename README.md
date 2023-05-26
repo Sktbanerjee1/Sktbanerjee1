@@ -34,8 +34,5 @@ Senior Data Analyst at the Center for Public Health Genomics (CPHG), School of M
 ![LINUX](https://img.shields.io/badge/Linux-FCC624?style=plastic&logo=linux&logoColor=black) ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=plastic&logo=kubernetes&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=plastic&logo=postman&logoColor=white)
 
 ---
-## 📊 GitHub Stats:
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=Sktbanerjee1&theme=dark&hide_border=true&include_all_commits=false&count_private=false&layout=compact)
----
 
 <!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
