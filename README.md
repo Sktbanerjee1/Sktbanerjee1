@@ -10,6 +10,9 @@ Senior Data Analyst at the Center for Public Health Genomics (CPHG), School of M
 * Network Analysis
 * Systems Biology
 
+## GitHub Gists
+* [SVG to PNG batch convert using inkscape](https://gist.github.com/Sktbanerjee1/c5c8f417eb9ba087ba9317e991a29c31)
+
 ## 💻 Tech Stack:
 
 #### Languages
