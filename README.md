@@ -1,5 +1,5 @@
 # 💫 About Me:
-Researcher at Biomedical Sciences Graduate Program (BIMS), University of Virginia. 
+Researcher in the Biomedical Sciences Graduate Program (BIMS), University of Virginia (UVA). 
 
 ## Things I am interested in
 * Genetics
