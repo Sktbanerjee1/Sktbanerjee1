@@ -7,8 +7,6 @@ Researcher at Biomedical Sciences Graduate Program (BIMS), University of Virgini
 * Biological Networks
 * Machine Learning
 
-## GitHub Gists
-* [SVG to PNG batch convert using inkscape](https://gist.github.com/Sktbanerjee1/c5c8f417eb9ba087ba9317e991a29c31)
 
 ## 💻 Tech Stack:
 
