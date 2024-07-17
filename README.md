@@ -1,14 +1,11 @@
 # 💫 About Me:
-Senior Data Analyst at the Center for Public Health Genomics (CPHG), School of Medicine, UVA.
+Researcher at Biomedical Sciences Graduate Program (BIMS), University of Virginia. 
 
 ## Things I am interested in
-
-* Algorithm design
-* Workflow (pipeline) optimization
+* Genetics
+* Computational Biology
+* Biological Networks
 * Machine Learning
-* Graph Theory
-* Network Analysis
-* Systems Biology
 
 ## GitHub Gists
 * [SVG to PNG batch convert using inkscape](https://gist.github.com/Sktbanerjee1/c5c8f417eb9ba087ba9317e991a29c31)
