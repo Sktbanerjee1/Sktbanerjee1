@@ -1,11 +1,10 @@
 # 💫 About Me:
 Researcher in the Biomedical Sciences Graduate Program (BIMS), University of Virginia (UVA). 
 
-## Things I am interested in
-* Genetics
-* Computational Biology
-* Biological Networks
-* Machine Learning
+## Interests
+* System Design
+* Data Pipelines
+* Statisitics & Machine Learning
 
 
 ## 💻 Tech Stack:
