@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saikat Bandyopadhyay | AI Research & Data Science</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #0f172a;  /* Deep Navy */
+            --primary-light: #334155; /* Slate */
+            --accent-blue: #3b82f6;   /* Royal Blue for AI */
+            --accent-purple: #8b5cf6; /* Violet for Theory/Research */
+            --accent-cyan: #06b6d4;   /* Cyan for Data */
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+        }
+
+        h1, h2, h3, h4, h5, .mono-font, .badge {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* --- Sidebar Navigation --- */
+        .sidebar {
+            background-color: var(--primary-dark);
+            color: white;
+            min-height: 100vh;
+            padding: 2rem;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .profile-img-placeholder {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            border: 4px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-link {
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        .nav-link i { margin-right: 10px; }
+
+        /* --- Cards & Dashboard --- */
+        .dashboard-card {
+            background: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-purple);
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* --- Timeline Progress Bar --- */
+        .timeline-wrapper {
+            position: relative;
+            padding: 30px 0 10px 0;
+        }
+
+        .progress-stacked {
+            height: 45px;
+            background-color: #e2e8f0;
+            border-radius: 8px;
+            display: flex;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-segment {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%; 
+            cursor: pointer;
+            position: relative;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .progress-segment:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+        .progress-segment:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-right: none; }
+
+        /* Enhanced Tooltip */
+        .hover-details {
+            visibility: hidden;
+            background-color: var(--primary-dark);
+            color: #fff;
+            text-align: left;
+            padding: 15px;
+            border-radius: 8px;
+            position: absolute;
+            z-index: 100;
+            bottom: 130%; 
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.2s, bottom 0.2s;
+            width: 320px; /* Wider for research descriptions */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+
+        .hover-details::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: var(--primary-dark) transparent transparent transparent;
+        }
+
+        .progress-segment:hover .hover-details {
+            visibility: visible;
+            opacity: 1;
+            bottom: 140%;
+        }
+
+        /* --- Skill Badges --- */
+        .badge-skill {
+            background-color: #f8fafc;
+            color: var(--primary-dark);
+            border: 1px solid #cbd5e1;
+            margin: 3px;
+            padding: 6px 12px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        .badge-skill:hover {
+            border-color: var(--accent-purple);
+            background-color: #f3f0ff;
+        }
+        .badge-skill i { color: var(--accent-purple); }
+
+        /* --- Mission Box --- */
+        .mission-box {
+            border-left: 5px solid var(--accent-purple);
+            background: #faf5ff; /* Light purple tint */
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        /* --- Link Cards --- */
+        .pub-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .sidebar { min-height: auto; padding: 1rem; }
+            .hover-details { width: 260px; left: 0; transform: none; } 
+            .progress-segment i { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 sidebar d-flex flex-column">
+            <div class="profile-section mb-4 text-center">
+                <div class="profile-img-placeholder mx-auto">SB</div>
+                <h5 class="mt-3 mb-1">Saikat Bandyopadhyay</h5>
+                <p class="small text-secondary mb-3">AI Research Scientist<br>& Data Modeler</p>
+                
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="https://www.linkedin.com/in/s-bandyopadhyay-" target="_blank" class="text-white opacity-75 hover-opacity-100"><i class="bi bi-linkedin fs-5"></i></a>
+                    <a href="https://github.com/Sktbanerjee1" target="_blank" class="text-white opacity-75 hover-opacity-100"><i class="bi bi-github fs-5"></i></a>
+                    <a href="mailto:saikat.10.05.95@gmail.com" class="text-white opacity-75 hover-opacity-100"><i class="bi bi-envelope-at fs-5"></i></a>
+                </div>
+            </div>
+            
+            <nav class="nav flex-column w-100">
+                <a class="nav-link active" href="#overview"><i class="bi bi-person-lines-fill"></i> Research Focus</a>
+                <a class="nav-link" href="#experience"><i class="bi bi-bar-chart-steps"></i> Career Timeline</a>
+                <a class="nav-link" href="#skills"><i class="bi bi-cpu"></i> Technical Stack</a>
+                <a class="nav-link" href="#projects"><i class="bi bi-diagram-3"></i> Manifold Projects</a>
+                <a class="nav-link" href="#publications"><i class="bi bi-journal-medical"></i> Publications</a>
+                <a class="nav-link" href="#education"><i class="bi bi-mortarboard"></i> Education</a>
+            </nav>
+
+            <div class="mt-auto pt-4 small text-secondary text-center">
+                <i class="bi bi-geo-alt-fill"></i> Charlottesville, VA<br>
+                &copy; 2025
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10 p-4 p-lg-5">
+            
+            <!-- Hero -->
+            <section id="overview" class="mb-5 fade-in">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-primary me-2"><i class="bi bi-mortarboard-fill"></i> PhD Track</span>
+                            <span class="badge bg-info text-dark"><i class="bi bi-graph-up"></i> AI Research</span>
+                        </div>
+                        <h1 class="display-5 fw-bold text-dark mb-3">
+                            Mechanistic Interpretability &<br>
+                            <span style="color: var(--accent-purple)">Geometric Deep Learning</span>
+                        </h1>
+                        <p class="lead text-secondary mb-4">
+                            Investigating how neural networks generalize high-dimensional data into <strong>geometric manifolds</strong> to learn causal patterns in complex biological systems.
+                        </p>
+                        
+                        <div class="mission-box shadow-sm">
+                            <i class="bi bi-quote fs-3 text-secondary position-absolute top-0 start-0 m-2 opacity-25"></i> 
+                            <p class="m-0 fst-italic">
+                                "My research generalizes beyond standard bioinformatics. I focus on the geometry of high-dimensional data, using mechanistic interpretability to understand how latent variables drive system behavior—building AI that is not just predictive, but architecturally transparent and secure."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center d-none d-lg-block">
+                        <!-- Abstract Tech Viz: Manifold Concept -->
+                        <div class="card border-0 bg-transparent">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center align-items-center gap-3 fs-1 text-muted opacity-50">
+                                    <i class="bi bi-grid-3x3"></i>
+                                    <i class="bi bi-arrow-right"></i>
+                                    <i class="bi bi-bezier2"></i>
+                                    <i class="bi bi-arrow-right"></i>
+                                    <i class="bi bi-lightbulb"></i>
+                                </div>
+                                <p class="small text-muted mt-2 mono-font">Data -> Latent Manifold -> Logic</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Timeline -->
+            <section id="experience" class="mb-5">
+                <div class="d-flex justify-content-between align-items-end mb-3">
+                    <h3 class="text-dark"><i class="bi bi-hourglass-split text-primary section-icon"></i>Professional Journey</h3>
+                </div>
+                
+                <div class="dashboard-card border-0 shadow-sm" style="background: white;">
+                    <div class="timeline-wrapper">
+                        <div class="progress-stacked" id="career-timeline">
+                            <!-- JS Injected -->
+                        </div>
+                        <!-- Timeline Legend -->
+                        <div class="d-flex justify-content-between mt-3 small mono-font text-secondary">
+                            <span><i class="bi bi-calendar-event"></i> Nov 2018</span>
+                            <span>CSIR (Secure AI)</span>
+                            <span>PierianDx</span>
+                            <span>UVA (Causal Research)</span>
+                            <span><i class="bi bi-calendar-check"></i> Present</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Grid -->
+            <section id="skills" class="mb-5">
+                <h3 class="text-dark mb-4"><i class="bi bi-tools text-primary section-icon"></i>Technical Stack & Theory</h3>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="dashboard-card h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary text-white p-2 rounded me-3"><i class="bi bi-bezier2 fs-5"></i></div>
+                                <h5 class="m-0">AI Research & Theory</h5>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <span class="badge badge-skill">Mechanistic Interpretability</span>
+                                <span class="badge badge-skill">Geometric Deep Learning</span>
+                                <span class="badge badge-skill">Manifold Learning</span>
+                                <span class="badge badge-skill">Latent Variable Discovery</span>
+                                <span class="badge badge-skill">Bayesian Networks</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-success text-white p-2 rounded me-3"><i class="bi bi-bar-chart-fill fs-5"></i></div>
+                                <h5 class="m-0">High-Dim Data</h5>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <span class="badge badge-skill">Dimensionality Reduction</span>
+                                <span class="badge badge-skill">Graph Neural Networks (GNN)</span>
+                                <span class="badge badge-skill">80k+ Variable Modeling</span>
+                                <span class="badge badge-skill">Hypothesis Testing</span>
+                                <span class="badge badge-skill">Complex Systems</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-info text-dark p-2 rounded me-3"><i class="bi bi-shield-lock fs-5"></i></div>
+                                <h5 class="m-0">Engineering & Security</h5>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <span class="badge badge-skill">Privacy-Preserving AI</span>
+                                <span class="badge badge-skill">Split-Key Architecture</span>
+                                <span class="badge badge-skill">Docker / AWS</span>
+                                <span class="badge badge-skill">PyTorch / TensorFlow</span>
+                                <span class="badge badge-skill">MLOps Pipeline</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section id="projects" class="mb-5">
+                <h3 class="text-dark mb-4"><i class="bi bi-kanban text-primary section-icon"></i>Key Projects: Modeling & Architecture</h3>
+                <div class="row g-4">
+                    <!-- Project 1 -->
+                    <div class="col-lg-6">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="text-primary mb-1">Causal Discovery in High-Dim Space</h5>
+                                    <p class="small text-muted mb-0">UVA | BIMS PhD Track (Computational Biology)</p>
+                                </div>
+                                <i class="bi bi-graph-up-arrow fs-4 text-secondary"></i>
+                            </div>
+                            <hr>
+                            <p class="small">Developed a <strong>Bayesian Network framework</strong> to disentangle causal drivers from noisy, high-dimensional datasets (80k+ variables). Focus on mapping complex dependency graphs to identify latent "driver nodes."</p>
+                            <div class="mt-2">
+                                <span class="badge badge-skill">Causal Inference</span>
+                                <span class="badge badge-skill">Graph Theory</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="col-lg-6">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="text-primary mb-1">RAPID-CT: Decoupled AI</h5>
+                                    <p class="small text-muted mb-0">CSIR | Lead Architect</p>
+                                </div>
+                                <i class="bi bi-shield-check fs-4 text-secondary"></i>
+                            </div>
+                            <hr>
+                            <p class="small">Engineered a privacy-preserving inference architecture. Deployed a ResNet-based model where the input manifold (Image) and Identity (PII) were processed in decoupled, encrypted streams.</p>
+                            <div class="mt-2">
+                                <span class="badge badge-skill">Secure Inference</span>
+                                <span class="badge badge-skill">Computer Vision</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="col-lg-6">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="text-primary mb-1">Systems Genetics & Manifolds</h5>
+                                    <p class="small text-muted mb-0">Farber Lab | UVA</p>
+                                </div>
+                                <i class="bi bi-activity fs-4 text-secondary"></i>
+                            </div>
+                            <hr>
+                            <p class="small">Applied <strong>Systems Genetics</strong> to model complex traits. Used statistical learning to map genotype-to-phenotype relationships, effectively treating biological variance as a high-dimensional optimization problem.</p>
+                            <div class="mt-2">
+                                <span class="badge badge-skill">QTL Mapping</span>
+                                <span class="badge badge-skill">Statistical Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Project 4 -->
+                     <div class="col-lg-6">
+                        <div class="dashboard-card">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="text-primary mb-1">Unstructured Data Mining</h5>
+                                    <p class="small text-muted mb-0">UVA | PhD Track</p>
+                                </div>
+                                <i class="bi bi-file-earmark-binary fs-4 text-secondary"></i>
+                            </div>
+                            <hr>
+                            <p class="small">Processed heavy unstructured text/string data (long-read sequencing) to resolve novel signals. Enhances data completeness for downstream predictive modeling.</p>
+                            <div class="mt-2">
+                                <span class="badge badge-skill">NLP / String Processing</span>
+                                <span class="badge badge-skill">Feature Engineering</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Publications -->
+             <section id="publications" class="mb-5">
+                <h3 class="text-dark mb-4"><i class="bi bi-journal-text text-primary section-icon"></i>Selected Publications</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <a href="https://pubs.acs.org/doi/full/10.1021/jasms.4c00119" target="_blank" class="pub-link">
+                            <div class="dashboard-card h-100 hover-shadow">
+                                <div class="d-flex justify-content-between">
+                                    <span class="badge bg-warning text-dark">J. Am. Soc. Mass Spectrom.</span>
+                                    <i class="bi bi-box-arrow-up-right text-muted"></i>
+                                </div>
+                                <h6 class="mt-3 mb-2 text-primary fw-bold">Multi-Omic Pipeline Validation</h6>
+                                <p class="small text-secondary mb-0">
+                                    Integrating unstructured long-read sequencing data with targeted mass spectrometry. A case study in multi-modal data integration.
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12643519/" target="_blank" class="pub-link">
+                            <div class="dashboard-card h-100 hover-shadow">
+                                <div class="d-flex justify-content-between">
+                                    <span class="badge bg-secondary">PMC / PubMed</span>
+                                    <i class="bi bi-box-arrow-up-right text-muted"></i>
+                                </div>
+                                <h6 class="mt-3 mb-2 text-primary fw-bold">Complex System Regulation</h6>
+                                <p class="small text-secondary mb-0">
+                                    Investigating novel regulators in biological barriers. Demonstrates application of hypothesis testing in complex physiological systems.
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section id="education" class="mb-5">
+                <h3 class="text-dark mb-4"><i class="bi bi-mortarboard text-primary section-icon"></i>Education</h3>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="row g-4">
+                                    <div class="col-md-6 border-end-md">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="bi bi-book fs-3 text-primary me-3"></i>
+                                            <h5 class="mb-0">University of Virginia</h5>
+                                        </div>
+                                        <p class="fw-bold mb-1">PhD Candidate, Computational Biology</p>
+                                        <p class="text-muted small">Current (Exp 2027) | Focus: Applied High-Scale ML Systems</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="bi bi-book fs-3 text-primary me-3"></i>
+                                            <h5 class="mb-0">KIIT, India</h5>
+                                        </div>
+                                        <p class="fw-bold mb-1">B.Tech & M.Tech (Dual Degree)</p>
+                                        <p class="text-muted small">Biotechnology (Computational Focus)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Timeline Logic -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // Detailed Career Data
+        const jobs = [
+            { 
+                company: "CSIR - IGIB", 
+                role: "Secure AI Architect",
+                start: new Date("2018-11-01"), 
+                end: new Date("2021-09-01"),
+                color: "#475569", // Slate
+                icon: "bi-building-lock",
+                desc: "Designed decoupled inference architectures. Applied Computer Vision (ResNet) to real-time medical imaging."
+            },
+            { 
+                company: "PierianDx", 
+                role: "Bioinformatics Eng.",
+                start: new Date("2021-10-01"), 
+                end: new Date("2022-06-01"),
+                color: "#3b82f6", // Royal Blue
+                icon: "bi-server",
+                desc: "Productionized automated pipelines. Managed high-throughput data streams under CAP/CLIA standards."
+            },
+            { 
+                company: "UVA - Sheynkman Lab", 
+                role: "Sr. Data Analyst",
+                start: new Date("2022-09-01"), 
+                end: new Date("2023-02-01"),
+                color: "#8b5cf6", // Violet
+                icon: "bi-bezier2",
+                desc: "Proteogenomics. Modeled peptide targets using long-read sequencing data."
+            },
+            { 
+                company: "UVA - Farber Lab", 
+                role: "Sr. Data Analyst",
+                start: new Date("2023-02-01"), 
+                end: new Date("2024-08-01"),
+                color: "#06b6d4", // Cyan
+                icon: "bi-diagram-3",
+                desc: "Systems Genetics. Mapping complex traits in high-dimensional biological datasets."
+            },
+            { 
+                company: "University of Virginia", 
+                role: "PhD Researcher",
+                start: new Date("2024-08-01"), 
+                end: new Date(), // Present
+                color: "#10b981", // Green
+                icon: "bi-mortarboard-fill",
+                desc: "Mechanistic Interpretability. Researching how neural networks learn geometric manifolds from data."
+            }
+        ];
+
+        // Calc Timeline Dimensions
+        const careerStart = jobs[0].start.getTime();
+        const careerEnd = new Date().getTime();
+        const totalDuration = careerEnd - careerStart;
+        const container = document.getElementById('career-timeline');
+
+        jobs.forEach((job, index) => {
+            const duration = job.end.getTime() - job.start.getTime();
+            const percentage = (duration / totalDuration) * 100;
+
+            const segment = document.createElement('div');
+            segment.classList.add('progress-segment');
+            segment.style.backgroundColor = job.color;
+            
+            const startStr = `${job.start.toLocaleString('default', { month: 'short' })} '${job.start.getFullYear().toString().substr(2)}`;
+            const endStr = job.end.toDateString() === new Date().toDateString() ? "Present" : `${job.end.toLocaleString('default', { month: 'short' })} '${job.end.getFullYear().toString().substr(2)}`;
+
+            segment.innerHTML = `
+                <i class="bi ${job.icon} fs-5 text-white-50"></i>
+                <div class="hover-details shadow">
+                    <h6 class="border-bottom pb-2 mb-2 mono-font text-warning" style="font-size:0.9rem;">
+                        ${job.company}
+                    </h6>
+                    <div class="d-flex justify-content-between small text-white-50 mb-2">
+                        <span>${job.role}</span>
+                        <span>${startStr} - ${endStr}</span>
+                    </div>
+                    <p class="small mb-0 text-white border-top pt-2" style="font-size:0.85rem; line-height:1.4">
+                        ${job.desc}
+                    </p>
+                </div>
+            `;
+
+            container.appendChild(segment);
+
+            setTimeout(() => {
+                segment.style.width = percentage + "%";
+            }, 150 * (index + 1));
+        });
+    });
+</script>
+</body>
+</html>
