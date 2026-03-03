@@ -3,608 +3,1569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saikat Bandyopadhyay | AI Research & Data Science</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+    <title>Saikat Bandyopadhyay | Computational Biologist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ============ CSS VARIABLES ============ */
         :root {
-            --primary-dark: #0f172a;  /* Deep Navy */
-            --primary-light: #334155; /* Slate */
-            --accent-blue: #3b82f6;   /* Royal Blue for AI */
-            --accent-purple: #8b5cf6; /* Violet for Theory/Research */
-            --accent-cyan: #06b6d4;   /* Cyan for Data */
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
+            --bg-primary: #06070b;
+            --bg-secondary: #0c0e15;
+            --bg-card: #10131c;
+            --bg-card-hover: #151925;
+            --text-primary: #e8eaf0;
+            --text-secondary: #8b90a0;
+            --text-muted: #555a6e;
+            --accent-cyan: #3edbd5;
+            --accent-cyan-dim: rgba(62, 219, 213, 0.15);
+            --accent-cyan-glow: rgba(62, 219, 213, 0.4);
+            --accent-blue: #4a7cff;
+            --accent-violet: #8b5cf6;
+            --accent-rose: #f472b6;
+            --border-subtle: rgba(255,255,255,0.06);
+            --border-accent: rgba(62, 219, 213, 0.2);
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* ============ RESET & BASE ============ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-cyan-dim) transparent;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-color);
-            color: #334155;
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, h4, h5, .mono-font, .badge {
-            font-family: 'JetBrains Mono', monospace;
+        ::selection {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
         }
 
-        /* --- Sidebar Navigation --- */
-        .sidebar {
-            background-color: var(--primary-dark);
-            color: white;
-            min-height: 100vh;
-            padding: 2rem;
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-cyan-dim); border-radius: 3px; }
 
-        .profile-img-placeholder {
-            width: 110px;
-            height: 110px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 50%;
+        a { color: var(--accent-cyan); text-decoration: none; transition: all 0.3s ease; }
+        a:hover { color: #fff; }
+
+        /* ============ NAVIGATION ============ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 3rem;
+            height: 72px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            border: 4px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            justify-content: space-between;
+            background: rgba(6, 7, 11, 0.6);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: all 0.4s var(--ease-out-expo);
         }
 
-        .nav-link {
-            color: #cbd5e1;
-            margin-bottom: 0.5rem;
-            border-radius: 6px;
+        .nav.scrolled {
+            background: rgba(6, 7, 11, 0.92);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-logo {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-cyan);
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover { color: var(--accent-cyan); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .nav-hamburger span {
+            width: 22px;
+            height: 1.5px;
+            background: var(--text-secondary);
             transition: all 0.3s ease;
         }
-        .nav-link:hover, .nav-link.active {
-            color: white;
-            background: rgba(255,255,255,0.1);
-            transform: translateX(5px);
-        }
-        .nav-link i { margin-right: 10px; }
 
-        /* --- Cards & Dashboard --- */
-        .dashboard-card {
-            background: var(--card-bg);
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 1.5rem;
-            height: 100%;
-            transition: transform 0.2s, box-shadow 0.2s;
+        /* ============ HERO SECTION ============ */
+        .hero {
             position: relative;
-            overflow: hidden;
-        }
-        
-        .dashboard-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
-            border-color: var(--accent-purple);
-        }
-
-        .section-icon {
-            font-size: 1.5rem;
-            margin-right: 0.5rem;
-            vertical-align: middle;
-        }
-
-        /* --- Timeline Progress Bar --- */
-        .timeline-wrapper {
-            position: relative;
-            padding: 30px 0 10px 0;
-        }
-
-        .progress-stacked {
-            height: 45px;
-            background-color: #e2e8f0;
-            border-radius: 8px;
-            display: flex;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .progress-segment {
-            height: 100%;
+            height: 100vh;
+            min-height: 700px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 0.85rem;
-            font-weight: bold;
-            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 0%; 
-            cursor: pointer;
-            position: relative;
-            border-right: 1px solid rgba(255,255,255,0.2);
+            overflow: hidden;
         }
 
-        .progress-segment:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
-        .progress-segment:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-right: none; }
-
-        /* Enhanced Tooltip */
-        .hover-details {
-            visibility: hidden;
-            background-color: var(--primary-dark);
-            color: #fff;
-            text-align: left;
-            padding: 15px;
-            border-radius: 8px;
+        #network-canvas {
             position: absolute;
-            z-index: 100;
-            bottom: 130%; 
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.2s, bottom 0.2s;
-            width: 320px; /* Wider for research descriptions */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 50%, transparent 0%, var(--bg-primary) 100%),
+                linear-gradient(180deg, transparent 0%, transparent 60%, var(--bg-primary) 100%);
+            z-index: 2;
             pointer-events: none;
         }
 
-        .hover-details::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -8px;
-            border-width: 8px;
-            border-style: solid;
-            border-color: var(--primary-dark) transparent transparent transparent;
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 0 2rem;
         }
 
-        .progress-segment:hover .hover-details {
-            visibility: visible;
-            opacity: 1;
-            bottom: 140%;
+        .hero-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s var(--ease-out-expo) 0.5s forwards;
         }
 
-        /* --- Skill Badges --- */
-        .badge-skill {
-            background-color: #f8fafc;
-            color: var(--primary-dark);
-            border: 1px solid #cbd5e1;
-            margin: 3px;
-            padding: 6px 12px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            border-radius: 20px;
-            transition: all 0.2s;
+        .hero-name {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.2s var(--ease-out-expo) 0.7s forwards;
         }
-        .badge-skill:hover {
-            border-color: var(--accent-purple);
-            background-color: #f3f0ff;
-        }
-        .badge-skill i { color: var(--accent-purple); }
 
-        /* --- Mission Box --- */
-        .mission-box {
-            border-left: 5px solid var(--accent-purple);
-            background: #faf5ff; /* Light purple tint */
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
+        .hero-name em {
+            font-style: italic;
+            color: var(--accent-cyan);
             position: relative;
         }
 
-        /* --- Link Cards --- */
-        .pub-link {
-            text-decoration: none;
-            color: inherit;
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.2s var(--ease-out-expo) 0.9s forwards;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .sidebar { min-height: auto; padding: 1rem; }
-            .hover-details { width: 260px; left: 0; transform: none; } 
-            .progress-segment i { display: none; }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s var(--ease-out-expo) 1.1s forwards;
+        }
+
+        .btn {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.9rem 2.2rem;
+            border: 1px solid var(--border-accent);
+            background: transparent;
+            color: var(--accent-cyan);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-cyan);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--ease-out-expo);
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--bg-primary);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(62, 219, 213, 0.2);
+        }
+
+        .btn:hover::before { transform: scaleX(1); }
+
+        .btn-ghost {
+            border-color: var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .btn-ghost::before { display: none; }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-out-expo) 1.5s forwards;
+        }
+
+        .hero-scroll-indicator span {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--accent-cyan), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ SECTIONS ============ */
+        .section {
+            padding: 8rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--accent-cyan);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        /* Reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============ ABOUT SECTION ============ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.85;
+        }
+
+        .about-text p strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 1.8rem;
+            border-radius: 4px;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .stat-card:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+        .stat-card:hover::before { transform: scaleX(1); }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* ============ EXPERIENCE SECTION ============ */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent-cyan), var(--border-subtle) 20%, var(--border-subtle) 80%, transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3.5rem;
+            padding-bottom: 3.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .timeline-dot {
+            position: absolute;
+            left: -3rem;
+            top: 0.4rem;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-cyan);
+            transform: translateX(-4px);
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            background: var(--accent-cyan);
+            box-shadow: 0 0 12px var(--accent-cyan-glow);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .timeline-role {
+            font-family: var(--font-body);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .timeline-org {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .timeline-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .timeline-bullets li {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .timeline-bullets li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            opacity: 0.6;
+        }
+
+        /* ============ PUBLICATIONS SECTION ============ */
+        .publications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .pub-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2rem 2.2rem;
+            border-radius: 4px;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+        }
+
+        .pub-card:hover {
+            border-color: var(--border-accent);
+            transform: translateX(4px);
+            box-shadow: -4px 0 0 var(--accent-cyan);
+        }
+
+        .pub-journal {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 0.6rem;
+        }
+
+        .pub-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
+        }
+
+        .pub-authors {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        .pub-authors .me {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .pub-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .pub-doi {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .pub-doi:hover { color: var(--accent-cyan); }
+
+        .pub-year {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.04);
+            padding: 0.25rem 0.7rem;
+            border-radius: 2px;
+        }
+
+        /* ============ SKILLS SECTION ============ */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .skill-group {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 2rem;
+            border-radius: 4px;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .skill-group:hover {
+            border-color: var(--border-accent);
+        }
+
+        .skill-group-title {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.03);
+            padding: 0.35rem 0.85rem;
+            border-radius: 2px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+        }
+
+        /* ============ AWARDS SECTION ============ */
+        .awards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .award-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            transition: all 0.3s ease;
+        }
+
+        .award-item:last-child { border-bottom: none; }
+
+        .award-year {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            white-space: nowrap;
+            min-width: 50px;
+            padding-top: 0.15rem;
+        }
+
+        .award-info h3 {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .award-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ============ CONTACT / FOOTER ============ */
+        .contact-section {
+            text-align: center;
+            padding: 8rem 2rem;
+            position: relative;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+        }
+
+        .contact-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .contact-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+            padding: 0.8rem 1.8rem;
+            border-radius: 2px;
+            transition: all 0.4s var(--ease-out-expo);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(62, 219, 213, 0.1);
+        }
+
+        .contact-link svg { width: 16px; height: 16px; }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer p {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        /* ============ SECTION DIVIDERS ============ */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 900px) {
+            .nav { padding: 0 1.5rem; }
+            .nav-links { display: none; }
+            .nav-hamburger { display: flex; }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: rgba(6, 7, 11, 0.97);
+                backdrop-filter: blur(20px);
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+
+            .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .section { padding: 5rem 1.5rem; }
+
+            .timeline-header { flex-direction: column; }
+
+            .hero-name { font-size: clamp(2.5rem, 10vw, 4.5rem); }
+        }
+
+        @media (max-width: 600px) {
+            .about-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .stat-card { padding: 1.2rem; }
+            .stat-number { font-size: 2rem; }
+            .contact-links { flex-direction: column; align-items: center; }
+            .timeline { padding-left: 2rem; }
+            .timeline::before { left: 0; }
+            .timeline-dot { left: -2rem; }
+        }
+
+        /* ============ PAGE TRANSITION OVERLAY ============ */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-helix {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .loader-helix::before, .loader-helix::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            animation: helixSpin 1.2s ease-in-out infinite;
+        }
+
+        .loader-helix::before {
+            background: var(--accent-cyan);
+            animation-delay: 0s;
+        }
+
+        .loader-helix::after {
+            background: var(--accent-blue);
+            animation-delay: 0.6s;
+        }
+
+        @keyframes helixSpin {
+            0% { transform: translate(-20px, -50%) scale(1); }
+            25% { transform: translate(0, -70%) scale(0.7); }
+            50% { transform: translate(20px, -50%) scale(1); }
+            75% { transform: translate(0, -30%) scale(0.7); }
+            100% { transform: translate(-20px, -50%) scale(1); }
         }
     </style>
 </head>
 <body>
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3 col-lg-2 sidebar d-flex flex-column">
-            <div class="profile-section mb-4 text-center">
-                <div class="profile-img-placeholder mx-auto">SB</div>
-                <h5 class="mt-3 mb-1">Saikat Bandyopadhyay</h5>
-                <p class="small text-secondary mb-3">AI Research Scientist<br>& Data Modeler</p>
-                
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="https://www.linkedin.com/in/s-bandyopadhyay-" target="_blank" class="text-white opacity-75 hover-opacity-100"><i class="bi bi-linkedin fs-5"></i></a>
-                    <a href="https://github.com/Sktbanerjee1" target="_blank" class="text-white opacity-75 hover-opacity-100"><i class="bi bi-github fs-5"></i></a>
-                    <a href="mailto:saikat.10.05.95@gmail.com" class="text-white opacity-75 hover-opacity-100"><i class="bi bi-envelope-at fs-5"></i></a>
-                </div>
-            </div>
-            
-            <nav class="nav flex-column w-100">
-                <a class="nav-link active" href="#overview"><i class="bi bi-person-lines-fill"></i> Research Focus</a>
-                <a class="nav-link" href="#experience"><i class="bi bi-bar-chart-steps"></i> Career Timeline</a>
-                <a class="nav-link" href="#skills"><i class="bi bi-cpu"></i> Technical Stack</a>
-                <a class="nav-link" href="#projects"><i class="bi bi-diagram-3"></i> Manifold Projects</a>
-                <a class="nav-link" href="#publications"><i class="bi bi-journal-medical"></i> Publications</a>
-                <a class="nav-link" href="#education"><i class="bi bi-mortarboard"></i> Education</a>
-            </nav>
-
-            <div class="mt-auto pt-4 small text-secondary text-center">
-                <i class="bi bi-geo-alt-fill"></i> Charlottesville, VA<br>
-                &copy; 2025
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="col-md-9 col-lg-10 p-4 p-lg-5">
-            
-            <!-- Hero -->
-            <section id="overview" class="mb-5 fade-in">
-                <div class="row align-items-center">
-                    <div class="col-lg-8">
-                        <div class="d-flex align-items-center mb-2">
-                            <span class="badge bg-primary me-2"><i class="bi bi-mortarboard-fill"></i> PhD Track</span>
-                            <span class="badge bg-info text-dark"><i class="bi bi-graph-up"></i> AI Research</span>
-                        </div>
-                        <h1 class="display-5 fw-bold text-dark mb-3">
-                            Mechanistic Interpretability &<br>
-                            <span style="color: var(--accent-purple)">Geometric Deep Learning</span>
-                        </h1>
-                        <p class="lead text-secondary mb-4">
-                            Investigating how neural networks generalize high-dimensional data into <strong>geometric manifolds</strong> to learn causal patterns in complex biological systems.
-                        </p>
-                        
-                        <div class="mission-box shadow-sm">
-                            <i class="bi bi-quote fs-3 text-secondary position-absolute top-0 start-0 m-2 opacity-25"></i> 
-                            <p class="m-0 fst-italic">
-                                "My research generalizes beyond standard bioinformatics. I focus on the geometry of high-dimensional data, using mechanistic interpretability to understand how latent variables drive system behavior—building AI that is not just predictive, but architecturally transparent and secure."
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 text-center d-none d-lg-block">
-                        <!-- Abstract Tech Viz: Manifold Concept -->
-                        <div class="card border-0 bg-transparent">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-center align-items-center gap-3 fs-1 text-muted opacity-50">
-                                    <i class="bi bi-grid-3x3"></i>
-                                    <i class="bi bi-arrow-right"></i>
-                                    <i class="bi bi-bezier2"></i>
-                                    <i class="bi bi-arrow-right"></i>
-                                    <i class="bi bi-lightbulb"></i>
-                                </div>
-                                <p class="small text-muted mt-2 mono-font">Data -> Latent Manifold -> Logic</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Interactive Timeline -->
-            <section id="experience" class="mb-5">
-                <div class="d-flex justify-content-between align-items-end mb-3">
-                    <h3 class="text-dark"><i class="bi bi-hourglass-split text-primary section-icon"></i>Professional Journey</h3>
-                </div>
-                
-                <div class="dashboard-card border-0 shadow-sm" style="background: white;">
-                    <div class="timeline-wrapper">
-                        <div class="progress-stacked" id="career-timeline">
-                            <!-- JS Injected -->
-                        </div>
-                        <!-- Timeline Legend -->
-                        <div class="d-flex justify-content-between mt-3 small mono-font text-secondary">
-                            <span><i class="bi bi-calendar-event"></i> Nov 2018</span>
-                            <span>CSIR (Secure AI)</span>
-                            <span>PierianDx</span>
-                            <span>UVA (Causal Research)</span>
-                            <span><i class="bi bi-calendar-check"></i> Present</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Skills Grid -->
-            <section id="skills" class="mb-5">
-                <h3 class="text-dark mb-4"><i class="bi bi-tools text-primary section-icon"></i>Technical Stack & Theory</h3>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="dashboard-card h-100">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="bg-primary text-white p-2 rounded me-3"><i class="bi bi-bezier2 fs-5"></i></div>
-                                <h5 class="m-0">AI Research & Theory</h5>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <span class="badge badge-skill">Mechanistic Interpretability</span>
-                                <span class="badge badge-skill">Geometric Deep Learning</span>
-                                <span class="badge badge-skill">Manifold Learning</span>
-                                <span class="badge badge-skill">Latent Variable Discovery</span>
-                                <span class="badge badge-skill">Bayesian Networks</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="dashboard-card h-100">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="bg-success text-white p-2 rounded me-3"><i class="bi bi-bar-chart-fill fs-5"></i></div>
-                                <h5 class="m-0">High-Dim Data</h5>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <span class="badge badge-skill">Dimensionality Reduction</span>
-                                <span class="badge badge-skill">Graph Neural Networks (GNN)</span>
-                                <span class="badge badge-skill">80k+ Variable Modeling</span>
-                                <span class="badge badge-skill">Hypothesis Testing</span>
-                                <span class="badge badge-skill">Complex Systems</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="dashboard-card h-100">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="bg-info text-dark p-2 rounded me-3"><i class="bi bi-shield-lock fs-5"></i></div>
-                                <h5 class="m-0">Engineering & Security</h5>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <span class="badge badge-skill">Privacy-Preserving AI</span>
-                                <span class="badge badge-skill">Split-Key Architecture</span>
-                                <span class="badge badge-skill">Docker / AWS</span>
-                                <span class="badge badge-skill">PyTorch / TensorFlow</span>
-                                <span class="badge badge-skill">MLOps Pipeline</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Projects -->
-            <section id="projects" class="mb-5">
-                <h3 class="text-dark mb-4"><i class="bi bi-kanban text-primary section-icon"></i>Key Projects: Modeling & Architecture</h3>
-                <div class="row g-4">
-                    <!-- Project 1 -->
-                    <div class="col-lg-6">
-                        <div class="dashboard-card">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h5 class="text-primary mb-1">Causal Discovery in High-Dim Space</h5>
-                                    <p class="small text-muted mb-0">UVA | BIMS PhD Track (Computational Biology)</p>
-                                </div>
-                                <i class="bi bi-graph-up-arrow fs-4 text-secondary"></i>
-                            </div>
-                            <hr>
-                            <p class="small">Developed a <strong>Bayesian Network framework</strong> to disentangle causal drivers from noisy, high-dimensional datasets (80k+ variables). Focus on mapping complex dependency graphs to identify latent "driver nodes."</p>
-                            <div class="mt-2">
-                                <span class="badge badge-skill">Causal Inference</span>
-                                <span class="badge badge-skill">Graph Theory</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 2 -->
-                    <div class="col-lg-6">
-                        <div class="dashboard-card">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h5 class="text-primary mb-1">RAPID-CT: Decoupled AI</h5>
-                                    <p class="small text-muted mb-0">CSIR | Lead Architect</p>
-                                </div>
-                                <i class="bi bi-shield-check fs-4 text-secondary"></i>
-                            </div>
-                            <hr>
-                            <p class="small">Engineered a privacy-preserving inference architecture. Deployed a ResNet-based model where the input manifold (Image) and Identity (PII) were processed in decoupled, encrypted streams.</p>
-                            <div class="mt-2">
-                                <span class="badge badge-skill">Secure Inference</span>
-                                <span class="badge badge-skill">Computer Vision</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 3 -->
-                    <div class="col-lg-6">
-                        <div class="dashboard-card">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h5 class="text-primary mb-1">Systems Genetics & Manifolds</h5>
-                                    <p class="small text-muted mb-0">Farber Lab | UVA</p>
-                                </div>
-                                <i class="bi bi-activity fs-4 text-secondary"></i>
-                            </div>
-                            <hr>
-                            <p class="small">Applied <strong>Systems Genetics</strong> to model complex traits. Used statistical learning to map genotype-to-phenotype relationships, effectively treating biological variance as a high-dimensional optimization problem.</p>
-                            <div class="mt-2">
-                                <span class="badge badge-skill">QTL Mapping</span>
-                                <span class="badge badge-skill">Statistical Learning</span>
-                            </div>
-                        </div>
-                    </div>
-
-                     <!-- Project 4 -->
-                     <div class="col-lg-6">
-                        <div class="dashboard-card">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h5 class="text-primary mb-1">Unstructured Data Mining</h5>
-                                    <p class="small text-muted mb-0">UVA | PhD Track</p>
-                                </div>
-                                <i class="bi bi-file-earmark-binary fs-4 text-secondary"></i>
-                            </div>
-                            <hr>
-                            <p class="small">Processed heavy unstructured text/string data (long-read sequencing) to resolve novel signals. Enhances data completeness for downstream predictive modeling.</p>
-                            <div class="mt-2">
-                                <span class="badge badge-skill">NLP / String Processing</span>
-                                <span class="badge badge-skill">Feature Engineering</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-             <!-- Publications -->
-             <section id="publications" class="mb-5">
-                <h3 class="text-dark mb-4"><i class="bi bi-journal-text text-primary section-icon"></i>Selected Publications</h3>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <a href="https://pubs.acs.org/doi/full/10.1021/jasms.4c00119" target="_blank" class="pub-link">
-                            <div class="dashboard-card h-100 hover-shadow">
-                                <div class="d-flex justify-content-between">
-                                    <span class="badge bg-warning text-dark">J. Am. Soc. Mass Spectrom.</span>
-                                    <i class="bi bi-box-arrow-up-right text-muted"></i>
-                                </div>
-                                <h6 class="mt-3 mb-2 text-primary fw-bold">Multi-Omic Pipeline Validation</h6>
-                                <p class="small text-secondary mb-0">
-                                    Integrating unstructured long-read sequencing data with targeted mass spectrometry. A case study in multi-modal data integration.
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12643519/" target="_blank" class="pub-link">
-                            <div class="dashboard-card h-100 hover-shadow">
-                                <div class="d-flex justify-content-between">
-                                    <span class="badge bg-secondary">PMC / PubMed</span>
-                                    <i class="bi bi-box-arrow-up-right text-muted"></i>
-                                </div>
-                                <h6 class="mt-3 mb-2 text-primary fw-bold">Complex System Regulation</h6>
-                                <p class="small text-secondary mb-0">
-                                    Investigating novel regulators in biological barriers. Demonstrates application of hypothesis testing in complex physiological systems.
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Education -->
-            <section id="education" class="mb-5">
-                <h3 class="text-dark mb-4"><i class="bi bi-mortarboard text-primary section-icon"></i>Education</h3>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="row g-4">
-                                    <div class="col-md-6 border-end-md">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <i class="bi bi-book fs-3 text-primary me-3"></i>
-                                            <h5 class="mb-0">University of Virginia</h5>
-                                        </div>
-                                        <p class="fw-bold mb-1">PhD Candidate, Computational Biology</p>
-                                        <p class="text-muted small">Current (Exp 2027) | Focus: Applied High-Scale ML Systems</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <i class="bi bi-book fs-3 text-primary me-3"></i>
-                                            <h5 class="mb-0">KIIT, India</h5>
-                                        </div>
-                                        <p class="fw-bold mb-1">B.Tech & M.Tech (Dual Degree)</p>
-                                        <p class="text-muted small">Biotechnology (Computational Focus)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-helix"></div>
     </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-logo">S.B.</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
 
-<!-- Timeline Logic -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        
-        // Detailed Career Data
-        const jobs = [
-            { 
-                company: "CSIR - IGIB", 
-                role: "Secure AI Architect",
-                start: new Date("2018-11-01"), 
-                end: new Date("2021-09-01"),
-                color: "#475569", // Slate
-                icon: "bi-building-lock",
-                desc: "Designed decoupled inference architectures. Applied Computer Vision (ResNet) to real-time medical imaging."
-            },
-            { 
-                company: "PierianDx", 
-                role: "Bioinformatics Eng.",
-                start: new Date("2021-10-01"), 
-                end: new Date("2022-06-01"),
-                color: "#3b82f6", // Royal Blue
-                icon: "bi-server",
-                desc: "Productionized automated pipelines. Managed high-throughput data streams under CAP/CLIA standards."
-            },
-            { 
-                company: "UVA - Sheynkman Lab", 
-                role: "Sr. Data Analyst",
-                start: new Date("2022-09-01"), 
-                end: new Date("2023-02-01"),
-                color: "#8b5cf6", // Violet
-                icon: "bi-bezier2",
-                desc: "Proteogenomics. Modeled peptide targets using long-read sequencing data."
-            },
-            { 
-                company: "UVA - Farber Lab", 
-                role: "Sr. Data Analyst",
-                start: new Date("2023-02-01"), 
-                end: new Date("2024-08-01"),
-                color: "#06b6d4", // Cyan
-                icon: "bi-diagram-3",
-                desc: "Systems Genetics. Mapping complex traits in high-dimensional biological datasets."
-            },
-            { 
-                company: "University of Virginia", 
-                role: "PhD Researcher",
-                start: new Date("2024-08-01"), 
-                end: new Date(), // Present
-                color: "#10b981", // Green
-                icon: "bi-mortarboard-fill",
-                desc: "Mechanistic Interpretability. Researching how neural networks learn geometric manifolds from data."
-            }
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <canvas id="network-canvas"></canvas>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-tag">Computational Biology &bull; Statistical Genetics &bull; Data Science</p>
+            <h1 class="hero-name">Saikat<br><em>Bandyopadhyay</em></h1>
+            <p class="hero-subtitle">Building computational frameworks that translate complex biological data into testable hypotheses and actionable insight.</p>
+            <div class="hero-cta">
+                <a href="#publications" class="btn">View Research</a>
+                <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <div class="section-divider"></div>
+    <section class="section" id="about">
+        <div class="reveal">
+            <p class="section-label">01 &mdash; About</p>
+            <h2 class="section-title">At the intersection of computation and biology</h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-text reveal" style="transition-delay: 0.1s">
+                <p>
+                    <strong>Computational biologist</strong> with expertise in statistical genetics, multi-omics data integration, and algorithm development. Trained to handle complex biological and clinical datasets, including GWAS, single-cell transcriptomics, mass spectrometry, and clinical imaging, with a consistent focus on translating computational findings into testable biological hypotheses.
+                </p>
+                <p>
+                    Committed to rigorous data governance, reproducibility, and the development of open, scalable analytical frameworks. Currently pursuing a <strong>PhD in Computational Biology</strong> at the University of Virginia, developing methods for causal gene identification through the integration of GWAS, eQTL, and single-cell transcriptomic data.
+                </p>
+                <p>
+                    Previously contributed to <strong>clinical genomics pipelines</strong> at PierianDx, <strong>deep learning for medical imaging</strong> at CSIR-IGIB, and <strong>global digital health architecture</strong> for the Governing Health Futures 2030 initiative.
+                </p>
+            </div>
+            <div class="about-stats reveal" style="transition-delay: 0.2s">
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Peer-Reviewed Publications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7+</div>
+                    <div class="stat-label">Years in Research</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Research Positions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Honors & Awards</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <div class="section-divider"></div>
+    <section class="section" id="experience">
+        <div class="reveal">
+            <p class="section-label">02 &mdash; Experience</p>
+            <h2 class="section-title">Research &amp; Professional Journey</h2>
+        </div>
+
+        <div class="timeline">
+            <!-- Research Fellow -->
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-role">Computational Biology Research Fellow</span>
+                    <span class="timeline-date">Aug 2024 &ndash; Present</span>
+                </div>
+                <div class="timeline-org">University of Virginia, Department of Genome Sciences</div>
+                <ul class="timeline-bullets">
+                    <li>Developed a computational colocalization pipeline integrating GWAS (Diversity Outbred mice) and bulk RNA-seq eQTL data to identify candidate causal genes. Implemented conditional analysis with bootstrapping to validate concordance between conditional and colocalization signals at the most significantly associated loci.</li>
+                    <li>Deconvoluted cell-type proportions from bulk RNA-seq data and constructed cell-type-specific WGCNA modules. Identified key hub genes using Bayesian network analysis (bnlearn), then prioritized candidate causal genes by overlapping colocalization hits with network hub genes.</li>
+                    <li>Performed pseudotime trajectory analysis on single-cell RNA-seq data using Slingshot to characterize gene expression dynamics of prioritized causal genes along the differentiation trajectories of osteoblasts and osteoclasts in bone marrow-derived stromal cell populations.</li>
+                    <li>Optimized parallelization pipelines on HPC clusters, reducing computational runtime by 24 hours per batch for genome-wide analyses.</li>
+                </ul>
+            </div>
+
+            <!-- Senior Data Analyst -->
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-role">Senior Data Analyst</span>
+                    <span class="timeline-date">Sep 2022 &ndash; Jul 2024</span>
+                </div>
+                <div class="timeline-org">University of Virginia, Department of Genome Sciences</div>
+                <ul class="timeline-bullets">
+                    <li>Developed a high-throughput processing pipeline for Low-Pass Whole Genome Sequencing (LP-WGS), achieving a 15% reduction in genotyping costs while maintaining high data fidelity for downstream haplotype calling and eQTL analysis.</li>
+                    <li>Deployed and managed a Proteogenomics pipeline (Long-Read Proteogenomics, Nextflow-based) integrating long-read RNA sequencing with mass spectrometry data, enabling identification of novel transcript isoforms and protein products absent from GENCODE reference annotations.</li>
+                    <li>Architected a standardized data governance framework enforcing FAIR principles across all research data assets, transforming an unstructured environment into a reproducible, audit-ready ecosystem.</li>
+                </ul>
+            </div>
+
+            <!-- PierianDx -->
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-role">Bioinformatician, Assay Productization</span>
+                    <span class="timeline-date">Oct 2021 &ndash; Jun 2022</span>
+                </div>
+                <div class="timeline-org">PierianDx</div>
+                <ul class="timeline-bullets">
+                    <li>Designed and maintained clinical genomics pipelines for variant calling at production scale, integrating the Illumina DRAGEN platform with downstream annotation and reporting systems.</li>
+                    <li>Developed a custom resource allocation engine to optimize engineering team deployment, demonstrating full-stack capability in solving internal operational bottlenecks.</li>
+                </ul>
+            </div>
+
+            <!-- WHO Consultant -->
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-role">Information Technology Consultant</span>
+                    <span class="timeline-date">Oct 2020 &ndash; Sep 2021</span>
+                </div>
+                <div class="timeline-org">Governing Health Futures 2030: Growing Up in a Digital World</div>
+                <ul class="timeline-bullets">
+                    <li>Delivered strategic architectural guidance on digital health ecosystems, ensuring web frameworks and data interfaces adhered to security and scalability standards for a global public health initiative.</li>
+                    <li>Performed code reviews and architectural assessments for digital health platforms, aligning public health objectives with engineering implementation.</li>
+                </ul>
+            </div>
+
+            <!-- CSIR-IGIB -->
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-role">Senior Project Associate</span>
+                    <span class="timeline-date">Nov 2018 &ndash; Sep 2021</span>
+                </div>
+                <div class="timeline-org">Institute of Genomics and Integrative Biology (CSIR-IGIB)</div>
+                <ul class="timeline-bullets">
+                    <li>Developed the RAPID-CT deep learning framework for detection of Intracranial Hemorrhage from brain CT scans, implementing a segmentation-based approach with ResNet backbones for high-precision classification.</li>
+                    <li>Engineered a PII-blind REST API utilizing a novel split-key encryption system, ensuring patient data anonymity during model inference.</li>
+                    <li>Built automated pipelines and interactive dashboards to ingest and visualize large-scale public datasets (TCGA, CPTAC), democratizing access to transcriptomic and epigenomic data.</li>
+                </ul>
+            </div>
+
+            <!-- Elucidata -->
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-role">Bioinformatics Intern</span>
+                    <span class="timeline-date">Sep 2018 &ndash; Nov 2018</span>
+                </div>
+                <div class="timeline-org">Elucidata Corporation</div>
+                <ul class="timeline-bullets">
+                    <li>Engineered client-facing dashboard modules for visualizing large-scale cancer genomics data, with features integrated directly into the production SaaS platform used by pharmaceutical clients.</li>
+                </ul>
+            </div>
+
+            <!-- KIIT JRF -->
+            <div class="timeline-item reveal">
+                <div class="timeline-dot"></div>
+                <div class="timeline-header">
+                    <span class="timeline-role">Junior Research Fellow</span>
+                    <span class="timeline-date">Nov 2017 &ndash; Aug 2018</span>
+                </div>
+                <div class="timeline-org">Kalinga Institute of Industrial Technology (KIIT)</div>
+                <ul class="timeline-bullets">
+                    <li>Managed the end-to-end data lifecycle from sample collection to raw data recording for microbial genomics, enforcing strict quality control protocols.</li>
+                    <li>Conducted genetic screening of <em>Streptomyces chilikensis</em> (isolated from Chilika Lake), identifying key regulatory genes controlling secondary metabolite production yields.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications -->
+    <div class="section-divider"></div>
+    <section class="section" id="publications">
+        <div class="reveal">
+            <p class="section-label">03 &mdash; Publications</p>
+            <h2 class="section-title">Peer-Reviewed Research</h2>
+        </div>
+        <div class="publications-list">
+            <div class="pub-card reveal">
+                <div class="pub-journal">JCI Insight &bull; 2025</div>
+                <div class="pub-title">The septin cytoskeleton is a regulator of intestinal epithelial barrier integrity and mucosal inflammation</div>
+                <div class="pub-authors">Naydenov NG, Hu G, Robak D, Zafar A, Makhmudova K, Lechuga S, Ohno Y, Sangwan N, <span class="me">Bandyopadhyay S</span>, Musich R, Jeffery E, Sun L, Marino-Melendez A, Rieder F, Sheynkman G, Ivanov AI, Ebrahim S.</div>
+                <div class="pub-meta">
+                    <a href="https://doi.org/10.1172/jci.insight.191538" target="_blank" rel="noopener" class="pub-doi">DOI: 10.1172/jci.insight.191538</a>
+                    <span class="pub-year">Vol. 10(22)</span>
+                </div>
+            </div>
+
+            <div class="pub-card reveal">
+                <div class="pub-journal">J. Am. Soc. Mass Spectrom. &bull; 2024</div>
+                <div class="pub-title">IS-PRM-Based Peptide Targeting Informed by Long-Read Sequencing for Alternative Proteome Detection</div>
+                <div class="pub-authors">Korchak JA, Jeffery ED, <span class="me">Bandyopadhyay S</span>, Jordan BT, Lehe MD, Watts EF, Fenix A, Wilhelm M, Sheynkman GM.</div>
+                <div class="pub-meta">
+                    <a href="https://doi.org/10.1021/jasms.4c00119" target="_blank" rel="noopener" class="pub-doi">DOI: 10.1021/jasms.4c00119</a>
+                    <span class="pub-year">Vol. 35(11): 2614&ndash;2630</span>
+                </div>
+            </div>
+
+            <div class="pub-card reveal">
+                <div class="pub-journal">J. Adv. Microbiol. &bull; 2020</div>
+                <div class="pub-title">Application of Computer Assisted Bimolecular Interaction Modelling in Predictive Microbiology, Current State and Future Prospects</div>
+                <div class="pub-authors"><span class="me">Bandyopadhyay S</span>, Ray L.</div>
+                <div class="pub-meta">
+                    <a href="https://doi.org/10.5530/jam.4.1.5" target="_blank" rel="noopener" class="pub-doi">DOI: 10.5530/jam.4.1.5</a>
+                    <span class="pub-year">Vol. 4(1): 59&ndash;69</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <div class="section-divider"></div>
+    <section class="section" id="skills">
+        <div class="reveal">
+            <p class="section-label">04 &mdash; Skills</p>
+            <h2 class="section-title">Technical Expertise</h2>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-group reveal">
+                <div class="skill-group-title">Statistical Genetics & Causal Inference</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">GWAS Analysis</span>
+                    <span class="skill-tag">eQTL Mapping</span>
+                    <span class="skill-tag">Colocalization (coloc)</span>
+                    <span class="skill-tag">Conditional Analysis</span>
+                    <span class="skill-tag">Bayesian Networks (bnlearn)</span>
+                    <span class="skill-tag">Mendelian Randomization</span>
+                </div>
+            </div>
+            <div class="skill-group reveal">
+                <div class="skill-group-title">Genomics & Multi-Omics Integration</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">WGS / LP-WGS</span>
+                    <span class="skill-tag">Long-Read RNA-seq</span>
+                    <span class="skill-tag">Proteogenomics</span>
+                    <span class="skill-tag">Transcriptomics</span>
+                    <span class="skill-tag">Epigenomics</span>
+                    <span class="skill-tag">Variant Calling</span>
+                    <span class="skill-tag">Genotype Imputation</span>
+                </div>
+            </div>
+            <div class="skill-group reveal">
+                <div class="skill-group-title">Single-Cell & Network Biology</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">scRNA-seq Processing</span>
+                    <span class="skill-tag">Pseudotime (Slingshot)</span>
+                    <span class="skill-tag">Cell-Type Deconvolution</span>
+                    <span class="skill-tag">WGCNA</span>
+                    <span class="skill-tag">Bayesian Network Construction</span>
+                    <span class="skill-tag">Hub Gene Identification</span>
+                </div>
+            </div>
+            <div class="skill-group reveal">
+                <div class="skill-group-title">Deep Learning & Engineering</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">CNNs (ResNet)</span>
+                    <span class="skill-tag">Medical Image Segmentation</span>
+                    <span class="skill-tag">REST API Deployment</span>
+                    <span class="skill-tag">Nextflow</span>
+                    <span class="skill-tag">Snakemake</span>
+                    <span class="skill-tag">HPC / SLURM</span>
+                    <span class="skill-tag">FAIR Data Governance</span>
+                </div>
+            </div>
+            <div class="skill-group reveal" style="grid-column: 1 / -1;">
+                <div class="skill-group-title">Programming & Resources</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">R</span>
+                    <span class="skill-tag">Bash</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">Linux/Unix</span>
+                    <span class="skill-tag">Jupyter</span>
+                    <span class="skill-tag">R Markdown</span>
+                    <span class="skill-tag">TCGA</span>
+                    <span class="skill-tag">CPTAC</span>
+                    <span class="skill-tag">GENCODE</span>
+                    <span class="skill-tag">UCSC Genome Browser</span>
+                    <span class="skill-tag">SRA</span>
+                    <span class="skill-tag">ProteomeXchange</span>
+                    <span class="skill-tag">GEO</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards -->
+    <div class="section-divider"></div>
+    <section class="section" id="awards">
+        <div class="reveal">
+            <p class="section-label">05 &mdash; Awards</p>
+            <h2 class="section-title">Honors &amp; Recognition</h2>
+        </div>
+        <div class="awards-list">
+            <div class="award-item reveal">
+                <span class="award-year">2025</span>
+                <div class="award-info">
+                    <h3>Reviewer&rsquo;s Choice Abstract</h3>
+                    <p>American Society of Human Genetics (ASHG) Annual Meeting</p>
+                </div>
+            </div>
+            <div class="award-item reveal">
+                <span class="award-year">2025</span>
+                <div class="award-info">
+                    <h3>Precision Health Initiative Trainee Stipend</h3>
+                    <p>University of Virginia</p>
+                </div>
+            </div>
+            <div class="award-item reveal">
+                <span class="award-year">2019</span>
+                <div class="award-info">
+                    <h3>Best Poster Award</h3>
+                    <p>National Workshop on Big Data and AI in Biotechnology and Healthcare, Noida</p>
+                </div>
+            </div>
+            <div class="award-item reveal">
+                <span class="award-year">2016</span>
+                <div class="award-info">
+                    <h3>Best Volunteer</h3>
+                    <p>School of Biotechnology, Kalinga Institute of Industrial Technology (KIIT)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <div class="section-divider"></div>
+    <section class="contact-section" id="contact">
+        <div class="reveal">
+            <p class="section-label" style="justify-content: center;">06 &mdash; Contact</p>
+            <h2 class="contact-title">Let&rsquo;s Connect</h2>
+            <p class="contact-subtitle">Open to collaborations, postdoctoral opportunities, and interdisciplinary research partnerships.</p>
+        </div>
+        <div class="contact-links reveal">
+            <a href="mailto:jpg6my@virginia.edu" class="contact-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                jpg6my@virginia.edu
+            </a>
+            <a href="https://www.linkedin.com/in/sbandyopadhyay-" target="_blank" rel="noopener" class="contact-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 Saikat Bandyopadhyay. Built with purpose.</p>
+    </footer>
+
+    <!-- ============ JAVASCRIPT ============ -->
+    <script>
+    // ============ BIOLOGICAL NETWORK ANIMATION ============
+    (function() {
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let mouse = { x: -1000, y: -1000 };
+        let nodes = [];
+        let animationId;
+
+        const CONFIG = {
+            nodeCount: 80,
+            connectionDistance: 180,
+            mouseRadius: 200,
+            mouseForce: 0.08,
+            friction: 0.96,
+            returnForce: 0.005,
+            minNodeSize: 1.5,
+            maxNodeSize: 4,
+            pulseSpeed: 0.003,
+            edgeOpacity: 0.12,
+            glowIntensity: 0.5,
+        };
+
+        // Node types represent different biological entities
+        const NODE_TYPES = [
+            { color: '62, 219, 213', label: 'gene', weight: 0.4 },    // cyan - genes
+            { color: '74, 124, 255', label: 'protein', weight: 0.3 },  // blue - proteins
+            { color: '139, 92, 246', label: 'variant', weight: 0.2 },  // violet - variants
+            { color: '244, 114, 182', label: 'phenotype', weight: 0.1 }, // rose - phenotypes
         ];
 
-        // Calc Timeline Dimensions
-        const careerStart = jobs[0].start.getTime();
-        const careerEnd = new Date().getTime();
-        const totalDuration = careerEnd - careerStart;
-        const container = document.getElementById('career-timeline');
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+        }
 
-        jobs.forEach((job, index) => {
-            const duration = job.end.getTime() - job.start.getTime();
-            const percentage = (duration / totalDuration) * 100;
+        function getNodeType() {
+            let r = Math.random();
+            for (const type of NODE_TYPES) {
+                r -= type.weight;
+                if (r <= 0) return type;
+            }
+            return NODE_TYPES[0];
+        }
 
-            const segment = document.createElement('div');
-            segment.classList.add('progress-segment');
-            segment.style.backgroundColor = job.color;
-            
-            const startStr = `${job.start.toLocaleString('default', { month: 'short' })} '${job.start.getFullYear().toString().substr(2)}`;
-            const endStr = job.end.toDateString() === new Date().toDateString() ? "Present" : `${job.end.toLocaleString('default', { month: 'short' })} '${job.end.getFullYear().toString().substr(2)}`;
+        function createNode(x, y) {
+            const type = getNodeType();
+            const size = CONFIG.minNodeSize + Math.random() * (CONFIG.maxNodeSize - CONFIG.minNodeSize);
+            return {
+                x: x || Math.random() * width,
+                y: y || Math.random() * height,
+                originX: x || 0,
+                originY: y || 0,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                size: size,
+                type: type,
+                phase: Math.random() * Math.PI * 2,
+                pulseRate: 0.5 + Math.random() * 1.5,
+                connections: 0,
+            };
+        }
 
-            segment.innerHTML = `
-                <i class="bi ${job.icon} fs-5 text-white-50"></i>
-                <div class="hover-details shadow">
-                    <h6 class="border-bottom pb-2 mb-2 mono-font text-warning" style="font-size:0.9rem;">
-                        ${job.company}
-                    </h6>
-                    <div class="d-flex justify-content-between small text-white-50 mb-2">
-                        <span>${job.role}</span>
-                        <span>${startStr} - ${endStr}</span>
-                    </div>
-                    <p class="small mb-0 text-white border-top pt-2" style="font-size:0.85rem; line-height:1.4">
-                        ${job.desc}
-                    </p>
-                </div>
-            `;
+        function initNodes() {
+            nodes = [];
+            const count = width < 600 ? 40 : CONFIG.nodeCount;
+            for (let i = 0; i < count; i++) {
+                const node = createNode();
+                node.originX = node.x;
+                node.originY = node.y;
+                nodes.push(node);
+            }
+        }
 
-            container.appendChild(segment);
+        function drawConnection(a, b, dist) {
+            const maxDist = CONFIG.connectionDistance;
+            const opacity = (1 - dist / maxDist) * CONFIG.edgeOpacity;
 
-            setTimeout(() => {
-                segment.style.width = percentage + "%";
-            }, 150 * (index + 1));
+            // Gradient edge colored by node types
+            const gradient = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+            gradient.addColorStop(0, `rgba(${a.type.color}, ${opacity})`);
+            gradient.addColorStop(1, `rgba(${b.type.color}, ${opacity})`);
+
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+
+            // Pulse traveling along the edge occasionally
+            if (Math.random() < 0.002) {
+                const t = (Date.now() * 0.001) % 1;
+                const px = a.x + (b.x - a.x) * t;
+                const py = a.y + (b.y - a.y) * t;
+                ctx.beginPath();
+                ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${a.type.color}, ${opacity * 3})`;
+                ctx.fill();
+            }
+        }
+
+        function drawNode(node, time) {
+            const pulse = Math.sin(time * CONFIG.pulseSpeed * node.pulseRate + node.phase);
+            const currentSize = node.size + pulse * 0.5;
+            const glowSize = currentSize * 3;
+
+            // Glow
+            const glow = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, glowSize);
+            glow.addColorStop(0, `rgba(${node.type.color}, ${CONFIG.glowIntensity * 0.3})`);
+            glow.addColorStop(1, `rgba(${node.type.color}, 0)`);
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, glowSize, 0, Math.PI * 2);
+            ctx.fillStyle = glow;
+            ctx.fill();
+
+            // Core
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, currentSize, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${node.type.color}, ${0.7 + pulse * 0.15})`;
+            ctx.fill();
+
+            // Bright center
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, currentSize * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${0.4 + pulse * 0.2})`;
+            ctx.fill();
+        }
+
+        function animate() {
+            const time = Date.now();
+            ctx.clearRect(0, 0, width, height);
+
+            // Update physics
+            for (let i = 0; i < nodes.length; i++) {
+                const node = nodes[i];
+
+                // Mouse interaction
+                const dx = mouse.x - node.x;
+                const dy = mouse.y - node.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < CONFIG.mouseRadius && dist > 0) {
+                    const force = (CONFIG.mouseRadius - dist) / CONFIG.mouseRadius * CONFIG.mouseForce;
+                    node.vx -= (dx / dist) * force;
+                    node.vy -= (dy / dist) * force;
+                }
+
+                // Return to origin
+                node.vx += (node.originX - node.x) * CONFIG.returnForce;
+                node.vy += (node.originY - node.y) * CONFIG.returnForce;
+
+                // Gentle ambient drift
+                node.vx += Math.sin(time * 0.0003 + node.phase) * 0.003;
+                node.vy += Math.cos(time * 0.0004 + node.phase) * 0.003;
+
+                // Apply friction
+                node.vx *= CONFIG.friction;
+                node.vy *= CONFIG.friction;
+
+                node.x += node.vx;
+                node.y += node.vy;
+
+                // Soft boundary
+                const margin = 50;
+                if (node.x < margin) node.vx += 0.05;
+                if (node.x > width - margin) node.vx -= 0.05;
+                if (node.y < margin) node.vy += 0.05;
+                if (node.y > height - margin) node.vy -= 0.05;
+            }
+
+            // Draw connections
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < CONFIG.connectionDistance) {
+                        drawConnection(nodes[i], nodes[j], dist);
+                    }
+                }
+            }
+
+            // Draw nodes
+            for (const node of nodes) {
+                drawNode(node, time);
+            }
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Event listeners
+        window.addEventListener('resize', () => {
+            resize();
+            initNodes();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.touches[0].clientX - rect.left;
+            mouse.y = e.touches[0].clientY - rect.top;
+        }, { passive: true });
+
+        canvas.addEventListener('touchend', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        // Init
+        resize();
+        initNodes();
+        animate();
+    })();
+
+    // ============ SCROLL REVEAL ANIMATION ============
+    (function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger siblings
+                    const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+                    const idx = Array.from(siblings).indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, idx * 80);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    })();
+
+    // ============ NAV SCROLL BEHAVIOR ============
+    (function() {
+        const nav = document.getElementById('nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Close mobile nav on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('open');
+            });
+        });
+    })();
+
+    // ============ PAGE LOADER ============
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('pageLoader').classList.add('hidden');
+        }, 600);
+    });
+
+    // ============ SMOOTH SCROLL FOR ANCHOR LINKS ============
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offset = 80;
+                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
         });
     });
-</script>
+
+    // ============ SKILL TAG HOVER RIPPLE ============
+    document.querySelectorAll('.skill-tag').forEach(tag => {
+        tag.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
+        });
+        tag.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    </script>
 </body>
 </html>
