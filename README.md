@@ -1,5 +1,5 @@
 # 💫 About Me:
-Researcher in the Biomedical Sciences Graduate Program (BIMS), University of Virginia (UVA). [Visit My Website](https://sktbanerjee1.github.io/Sktbanerjee1/)
+Researcher in the Biomedical Sciences Graduate Program (BIMS), University of Virginia (UVA). [Visit My Website](https://sktbanerjee1.github.io/portfolio/)
 
 ## Interests
 * System Design
